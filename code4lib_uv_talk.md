@@ -56,13 +56,68 @@ If you're cautious and conservative, this will make you feel more comfortable ab
 
 
 ### How we're now using `uv`
-    - 4/8:00
+    - 3:30/7:00
 	- pyproject.toml
 	- ci-compatible
 	- package-upgrade? new-branch; no problem, due to dependencies-as-code (with our code-update script)
         - on the one-hand, this is obvious, but it's not to be dismissed. Compare to the way we used to create alternate venvs, and point an env simlink to the currently active file -- and switch that when working with different branches.
     - experimentation: auto-package updater.
 
+The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `uv`-specifict thing -- it's a python standard.
+
+Here's one of our typical pyproject.toml files:
+<https://github.com/Brown-University-Library/bdr_uploader_hub_project/blob/main/pyproject.toml>
+
+In the interests of time, I'm only going to point out two things in this file:
+
+(1) **requires-python**
+<https://github.com/Brown-University-Library/bdr_uploader_hub_project/blob/a5abcecb99dcf323930dfd765d86059178c8b3b5/pyproject.toml#L6>
+
+(2) **dependencies**
+<https://github.com/Brown-University-Library/bdr_uploader_hub_project/blob/a5abcecb99dcf323930dfd765d86059178c8b3b5/pyproject.toml#L7-L14>
+
+If you use a requirements-file, the `dependencies` section will look very familiar: (Like with a requirements file, you don't have to use version-numbers, and if you do, there are different options.)
+
+Ok -- let's say I `cd` into this project. And let's say I do _not_ have any virtual environment set up. And let's say I want to run the tests, via:
+`uv run ./run_tests.py`.
+
+To paraphrase the "Muppet Christmas Carol" (which paraphrases Dickens):
+"Now, once again, I must ask you to remember that I do _not_ have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."
+
+What you'll see...
+
+```
+bdr_uploader_hub_project % uv run ./run_tests.py
+Found 25 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.........................
+----------------------------------------------------------------------
+Ran 25 tests in 0.710s
+
+OK
+```
+
+Here's what happens, under-the-hood:
+- `uv` will update (or create) a `uv.lock` file, showing detailed info of _all_ dependencies (not just the ones listed in the pyproject.toml file, but their dependencies as well). (This is very much like pip's `requirements.txt` file.)
+- it will then create an invisible `.venv` directory.
+- it will then update that `.venv` directory with whatever version of python is specified -- and with all the dependencies listed in the `uv.lock` file.
+- it will then activate that virtual-environment.
+- it does all of that in the blink of an eye.
+- it will then run the tests, in the context of the `.venv's` virtual-environment.
+
+The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-enviroment stuff is auto-magically taken care of.
+
+To wrap this up -- because I want to get to the really fun stuff...
+
+Here's our code-deployment script:
+<https://github.com/Brown-University-Library/code_update_script/blob/main/uv_tomlized_code_update_script_CALLEE.sh>
+
+the highlights...
+- we cd to the project-directory: <https://github.com/Brown-University-Library/code_update_script/blob/753fb9cb806e0add69e4513899dd8455deee0cc6/uv_tomlized_code_update_script_CALLEE.sh#L55>
+- this one line updates the virtual-environment, _superfast_: <https://github.com/Brown-University-Library/code_update_script/blob/753fb9cb806e0add69e4513899dd8455deee0cc6/uv_tomlized_code_update_script_CALLEE.sh#L61>
+
+What this means is that if you're deploying a branch to experiment with a new version of python, or a new version of django, or a new version of an xml package -- you don't have to think -- at all -- about managing the virtual-environment. Your deploy is exactly the same as a code-only deploy; your code-changes to the pyproject.toml file auto-flow into an updated, active virtual-environment seamlessly, and very, very quickly.
 
 ---
 
