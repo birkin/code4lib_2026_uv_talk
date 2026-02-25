@@ -127,30 +127,73 @@ What this means is that if you're deploying a branch to experiment with a new ve
 What I've shared so far has been about how uv can be really useful for development. This second-half of the talk is about features `uv` offers that simplify working with code for non-developers. 
 
 #### Inline-script-metadata -- intro.
-    - 2/10:00
+    - 3:30/10:30
 	- imagine you're doing a demo for folk wanting to understand ways to access an api, or for folk wanting to explore natural-language-processing with spaCy.
 
 Imagine you're doing a workshop for folk wanting to learn about APIs, and how to access them. You want to show them useful code to access the API, and you want them to be able to run this on their own computers so that they can more easily experiment during and after the workshop.
 
-Most of us have likely had the experience of wanting to cover something in a workshop -- only to experience getting bogged down in the set-up-process -- of installing a certain version of python, and then installing dependencies in a virtual-environment. Sometimes a jupyter-notebook or google-colab can minimize this. But `uv` can really be terrific for this, too.
+Most of us have likely had the experience of wanting to cover something in a workshop -- only to experience getting bogged down in the set-up-process -- of installing a certain version of python, and then installing dependencies in a virtual-environment. Sometimes a jupyter-notebook or google-colab can minimize this. But `uv` can also be very useful for this, too.
 
-Everything that follows _does_ assume end-users have installed `uv`. I have not found that installation to be onerous -- but it is a requirement for what fillows.
+Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are one-liners -- but it is a requirement for what follows.
 
 Ok -- you show your users this sample code:
 
+(`code4lib_2026_uv_talk/api_example_01.py`)
+
+...and ask them to `cd` to the directory where that file is, and then run:
+
+`uv run ./api_example_01.py`
+
+The output:
 ```
+% uv run ./api_example_01.py
+Primary Title: Abe Lincoln as a babe, as a boy and youth
 ```
+
+Your workshop attendees have just been able to run a python script without installing python, or a virtual-environment, or dependencies. And you can focus on the API-concepts you want to.
+
+The magic is in the inline-script-metadata at the top. Like the pyproject.toml file mentioned previously -- this is not a `uv` specific feature, but an official python-specification (PEP 723). 
+
+Under-the-hood, uv is doing something very similar to what was shown before:
+- it downloads the version of python if it's not already available
+- it figures the dependencies and sub-dependencies needed
+- it downloads ones that aren't already available
+- it activates a virtual-environment
+- it does all this invisibly to the user, in an ephemeral virtual-environment (with caching, so subsequent venv preparation is blazingly fast)
+- it runs the program in the context of that virtual-environment
+
+One addition: What if your script needs a secret-api-key? We developers would likely use a `.env` file and load the python-package `python-dotenv`. But you can tell them to create a file named "secret_stuff.txt", put in `API_KEY = "whatever"`
+
+...and then run `uv run --env-file "/path/to/scret_stuff.txt" ./api_example_01.py`
+
+...and `uv` will make envars available from that file.
 
 ---
 
 
+#### Inline-script-metadata -- gists.
+
 - Inline-script-metadata -- gists.
-    - 1/11:00
+    - 0:30/11:00
 	- at some point, astral began supporting gists -- making it easier to share code with those folk above.
 
-- Inline-script-metadata -- utilities.
+The elves making `uv` didn't stop there, they enabled the above script to be run like this:
+
+`uv run "https://gist.github.com/birkin/8c10e338f266555e53ac2f3a496e4153"`
+
+If you have `uv` installed, go ahead, try that.
+
+---
+
+
+### Inline-script-metadata -- utilities.
     - 1/12:00 
 	- if you can run gists remotely, you can run collections of scripts remotely -- more useful for finding/organizing/group-versioning.
+
+herezz
+
+---
+
 
 - Inline-script-metadata -- github-pages.
     - 2/14:00
