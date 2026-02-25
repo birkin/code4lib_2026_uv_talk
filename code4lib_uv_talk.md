@@ -122,11 +122,27 @@ What this means is that if you're deploying a branch to experiment with a new ve
 ---
 
 
-Transition from programming to helping others...
+### helping others
 
-- Inline-script-metadata -- intro.
+What I've shared so far has been about how uv can be really useful for development. This second-half of the talk is about features `uv` offers that simplify working with code for non-developers. 
+
+#### Inline-script-metadata -- intro.
     - 2/10:00
 	- imagine you're doing a demo for folk wanting to understand ways to access an api, or for folk wanting to explore natural-language-processing with spaCy.
+
+Imagine you're doing a workshop for folk wanting to learn about APIs, and how to access them. You want to show them useful code to access the API, and you want them to be able to run this on their own computers so that they can more easily experiment during and after the workshop.
+
+Most of us have likely had the experience of wanting to cover something in a workshop -- only to experience getting bogged down in the set-up-process -- of installing a certain version of python, and then installing dependencies in a virtual-environment. Sometimes a jupyter-notebook or google-colab can minimize this. But `uv` can really be terrific for this, too.
+
+Everything that follows _does_ assume end-users have installed `uv`. I have not found that installation to be onerous -- but it is a requirement for what fillows.
+
+Ok -- you show your users this sample code:
+
+```
+```
+
+---
+
 
 - Inline-script-metadata -- gists.
     - 1/11:00
