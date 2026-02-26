@@ -7,11 +7,11 @@
 
 _(2/2:00 (done-by))_
 
-Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is about a tool I've come to love, `uv`. `uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python environments. 
+Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is about an open-source tool I've come to love, `uv`. `uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python environments. 
 
 Just so we're on the same page: to clarify two terms... 
-- term: "python-package": i think of a python-package as a bundle of code that does something. python comes with lots of useful bundles-of-code, or packages, built-in. So if you want to have your code make web-requests, or work with xml, python contains built-in packages for each of those; you don't have to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
-- term: "virtual-environment": project-A, from two years ago, might have been built with python-3.8, using a third-party xml python-package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml python-package, but version-XYZ. virtual-environments are a way to organize these python/package environments in a way that don't interfere with one another.
+- term: **"python-package"**: i think of a python-package as a bundle of code that does something. python comes with lots of useful bundles-of-code, or packages, built-in. So if you want to have your code make web-requests, or work with xml, python contains built-in packages for each of those; you don't have to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
+- term: **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml python-package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml python-package, but version-XYZ. virtual-environments are a way to organize these python/package environments in a way that don't interfere with one another.
 
 Ok -- in this talk, I'll share two main things: 
 - First, how our dev-team _started_ using `uv` -- and how we now use it -- for our projects. 
