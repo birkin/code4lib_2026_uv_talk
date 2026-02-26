@@ -1,21 +1,8 @@
 # uv talk notes
 
-## todo
 
-- put together initial outline
-- confirm how long
-- find previous notes
-
----
-
-
-## outline
-
-### What is `uv`?
+## What is `uv`?
     - 2/2:00 (done-by)
-    - me
-	- it's a python package-manager
-	- not covered?
 
 Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is about a tool I've come to love, `uv`. `uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python environments. 
 
@@ -28,9 +15,8 @@ Ok -- in this talk, I'll share how our dev-team _started_ using `uv` -- and now 
 ---
 
 
-### How we started using `uv`
+## How we started using `uv`
     - 1:30/3:30
-	- "pip"-compatibility mode
 
 The standard, ubiquitous way folk work with python-packages and virtual-environments has been via the tool `pip`. `uv` has an entire pip-compatibility mode so that everything you've done with pip -- you can do, in almost the exact-same-way -- via uv.
 
@@ -55,13 +41,8 @@ If you're cautious and conservative, this will make you feel more comfortable ab
 ---
 
 
-### How we're now using `uv`
+## How we're now using `uv`
     - 3:30/7:00
-	- pyproject.toml
-	- ci-compatible
-	- package-upgrade? new-branch; no problem, due to dependencies-as-code (with our code-update script)
-        - on the one-hand, this is obvious, but it's not to be dismissed. Compare to the way we used to create alternate venvs, and point an env simlink to the currently active file -- and switch that when working with different branches.
-    - experimentation: auto-package updater.
 
 The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `uv`-specifict thing -- it's a python standard.
 
@@ -122,13 +103,12 @@ What this means is that if you're deploying a branch to experiment with a new ve
 ---
 
 
-### helping others
+## helping others
 
 What I've shared so far has been about how uv can be really useful for development. This second-half of the talk is about features `uv` offers that simplify working with code for non-developers. 
 
-#### Inline-script-metadata -- intro.
+## Inline-script-metadata -- intro.
     - 3:30/10:30
-	- imagine you're doing a demo for folk wanting to understand ways to access an api, or for folk wanting to explore natural-language-processing with spaCy.
 
 Imagine you're doing a workshop for folk wanting to learn about APIs, and how to access them. You want to show them useful code to access the API, and you want them to be able to run this on their own computers so that they can more easily experiment during and after the workshop.
 
@@ -171,35 +151,79 @@ One addition: What if your script needs a secret-api-key? We developers would li
 ---
 
 
-#### Inline-script-metadata -- gists.
-
-- Inline-script-metadata -- gists.
+## Inline-script-metadata -- gists.
     - 0:30/11:00
-	- at some point, astral began supporting gists -- making it easier to share code with those folk above.
 
-The elves making `uv` didn't stop there, they enabled the above script to be run like this:
+The elves making `uv` didn't stop there, they enabled the above script to be run _remotely_, like this:
 
 `uv run "https://gist.github.com/birkin/8c10e338f266555e53ac2f3a496e4153"`
 
-If you have `uv` installed, go ahead, try that.
+If you have `uv` installed, go ahead, try that!
 
 ---
 
 
-### Inline-script-metadata -- utilities.
-    - 1/12:00 
-	- if you can run gists remotely, you can run collections of scripts remotely -- more useful for finding/organizing/group-versioning.
+## Inline-script-metadata -- github repo.
+    - 0:30/11:30 
 
-herezz
+But maybe you don't want to share lots of individual gist-urls (where the url doesn't convey meaning) with your workshop users. Wouldn't it be nice to group useful files together in a github repo, and share repo-script links?
+
+You _can_ do that, but you have to use the "raw" url. Here's an example from an experimental "utilities" repo:
+
+```
+% uv run "https://raw.githubusercontent.com/birkin/utilities-project/refs/heads/main/random_id_maker.py" --length 20
+UxJmwDkHbaeRnNXTkyWH
+```
+
+(Here's the regular github url to that script: <https://github.com/birkin/utilities-project/blob/main/random_id_maker.py>)
 
 ---
 
 
-- Inline-script-metadata -- github-pages.
+## Inline-script-metadata -- github-pages.
     - 2/14:00
-    - offers a really useful website for your users.
 
-- Summary
+But the _ideal_ would be a way to bundle together a bunch of useful scripts to share, in a friendly useful way. A combination of `uv` and github-pages offers just this.
+
+Here's an experimental github-repo of tools for working with the Brown Digital Repository (BDR) public API:
+<https://github.com/Brown-University-Library/bdr-api-tools>
+
+But this is much nicer to offer to end-users -- a website:
+<https://brown-university-library.github.io/bdr-api-tools/>
+
+To get from the repo to the much friendlier website, this is all I had to do:
+- create an `index.md` file ([link](https://github.com/Brown-University-Library/bdr-api-tools/blob/main/index.md))
+- go to the repo's `Settings --> Pages` setting 
+- under "Branch", change "None" to "main" -- and leave the default "/(root)" -- and click "Save"
+- in a few minutes, reloading the page will show under the "GitHub Pages" title: 
+
+Your site is live at https://brown-university-library.github.io/bdr-api-tools/
+
+You can give that link to your users, and that landing page is completely under your control, from the `index.md` file. In that file, you can mix explanatory material with "try it" instructions with friendly-url uv commands like:
+
+```
+% uv run https://brown-university-library.github.io/bdr-api-tools/calc_collection_size.py --collection-pid bdr:bwehb8b8
+ 
+Collection: bdr:bwehb8b8
+Title: Brown University Open Data Collection
+Items found: 970
+Items with size counted: 970
+Total bytes: 266861380584
+Human: 248.53 GB
+```
+
+---
+
+
+## Closing
     - 1/15:00 (done-by)
+
+To sum up, I love `uv` for two main reasons:
+
+- It makes deploys affecting the virtual-environment no different than code-deploys, greatly faciliating package upgrades.
+
+- It allows us as developers to work with colleagues who do trainings to come up with scripts that end-users can refer to and experient with -- without the overhead of python-versions, virtual-environments, and dependency-management that can bog down less-technical end-users who are motivated to try useful tools.
+
+There's a lot more that `uv` does, but these are the highlights for me. I hope you enjoy using it for dev-projects as much as I have, and that you share it with colleagues who do trainings with students, staff, and faculty at your institutions.
 
 ---
