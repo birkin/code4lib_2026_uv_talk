@@ -265,9 +265,9 @@ A combination of `uv` and github.io-pages offers just this.
 We have a small github-repo of tools for working with the Brown Digital Repository (BDR) public API:
 <https://github.com/Brown-University-Library/bdr-api-tools>
 
-**(github.io-pages slide)**
+**(example-website slide)**
 
-But we offer to end-users the much nicer website:
+But we offer to end-users not the repo-url, but a much nicer website url:
 <https://brown-university-library.github.io/bdr-api-tools/>
 
 The much friendlier website is auto-created from the repo via just three steps:
@@ -281,7 +281,11 @@ The much friendlier website is auto-created from the repo via just three steps:
 
 In a few minutes, reloading the page will show, under the "GitHub Pages" title, the message: _"Your site is live at https://brown-university-library.github.io/bdr-api-tools/"_.
 
-You can give that link to your users, and that landing page is completely under your control, from the `index.md` file. In that file, you can mix explanatory material with "try it" instructions...
+You can give that link to your users, and that landing page is completely under your control, from the `index.md` file. 
+
+**(example-website-2 slide)**
+
+In that file, you can mix explanatory material with "try it" instructions...
 
 **(nice-script-urls slide)**
 
