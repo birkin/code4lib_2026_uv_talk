@@ -13,12 +13,13 @@ Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is
 
 `uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python environments. 
 
-Just so we're on the same page: to clarify two terms... 
+I know this is code4lib -- but just so we're on the same page: to clarify two terms... 
 
 **(terms slide)**
 
 - **"python-package"**: i think of a python-package as a bundle of code that does some -thing-. python comes with lots of useful bundles-of-code, or packages, built-in. So if you want to have your code make web-requests, or work with xml, python contains built-in packages for each of those; you don't have to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
-- **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml package, but version-XYZ. virtual-environments are a way to organize these python/package environments in a way that don't interfere with one another.
+
+- **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml package, but version-XYZ. virtual-environments are a way to isolate these python/package environments so they don't interfere with one another.
 
 Ok -- in this talk, I'll share two main things: 
 
@@ -49,9 +50,9 @@ So if you have a virtual-environment activated, instead of using the standard:
 
 `uv pip install pymarc`
 
-And if you have a "requirements.txt" file, listing the packages you're project needs, you can run a `uv` command very similar to:
+And if you have a "requirements.txt" file, listing the packages your project needs, you can run a `uv` command very similar to:
 
-`pip install -r /path/to/requirments.txt`
+`pip install -r /path/to/requirements.txt`
 
 ...that will populate your activated virtual-environment in nearly exactly the same way.
 
@@ -66,7 +67,7 @@ _(1:30/3:30)_
 
 **(our-current-usage slide)**
 
-The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `uv`-specifict thing -- it's a standard python specification (PEP 621 and others).
+The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `uv`-specific thing -- it's a standard python specification (PEP 621 and others).
 
 **(pyproject.toml example)**
 
@@ -94,7 +95,7 @@ I try to run the tests...
 
 ...and they run! And remember all those dependencies!
 
-The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-enviroment stuff is auto-magically taken care of.
+The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-environment stuff is auto-magically taken care of.
 
 Here's what happening, under-the-hood:
 - `uv` either updates (or creates) a `uv.lock` file, showing detailed info of _all_ dependencies (not just the ones listed in the pyproject.toml file, but their dependencies as well). (This is very much like the file `pip-compile` creates.)
@@ -133,7 +134,7 @@ This second-half of the talk is about features `uv` offers that simplify working
 
 The problem being addressed:
 
-Many of us have had the experience of wanting to run workshop for users on something like how to access APIs -- only to experience getting bogged down in the set-up-process -- of installing a certain version of python, and then installing dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
+Many of us have had the experience of wanting to run a workshop for users on something like how to access APIs, or using natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
 
 Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are just one-liners -- but it _is_ a requirement for what follows.
 
@@ -156,7 +157,7 @@ You point out how the code accessed the url, then parsed the json response, and 
 
 What you haven't done is spent _any_ time with your users on set-up and installation -- but not because this is hidden, and they'll have to figure out good-practices later -- but because this is the way `uv` works.
 
-Your workshop attendees have just been able to run a python script without _explitly_ installing python, or a virtual-environment, or dependencies.
+Your workshop attendees have just been able to run a python script without _explicitly_ installing python, or a virtual-environment, or dependencies.
 
 **(inline-script-metadata slide)**
 
@@ -168,7 +169,7 @@ Under-the-hood, uv is doing something very similar to what was shown before:
 - it downloads ones that aren't already available and installs them into a virtual-environment
 - it activates and populates the virtual-environment
 - it does all this invisibly to the user, in an invisible ephemeral virtual-environment -- with caching, so subsequent venv preparation is blazingly fast
-- finally,it runs the api-script in the context of that virtual-environment
+- finally, it runs the api-script in the context of that virtual-environment
 
 SKIP-FOR-TIME? **(need-envar-secrets? slide)**
 
@@ -181,7 +182,7 @@ One aside: What if your script needs a secret-api-key? We developers would likel
 ---
 _(3:30/10:30)_
 
-If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-envionmnet, what to use when? 
+If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-environmnet, what to use when? 
 
 **(I.S.Metadata-vs-PP.toml?)**
 
