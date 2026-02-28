@@ -77,7 +77,7 @@ In the interests of time, I'm only going to point out two things in this file:
 
 (1) _requires-python_
 
-...where a python-version is specified.
+...where a python-version or version-range is specified.
 
 (2) _dependencies_
 
@@ -87,7 +87,7 @@ Ok -- let's say I `cd` into this project.
 
 **(run_tests slide)**
 
-Let's say I've set this project up a couple of days ago, but haven't done anything regarding a virtual environment yet. I see the run_tests.py file and want to run it -- i often start work on a project that way. To paraphrase a line from "A Muppet Christmas Carol": _"Now, once again, I must ask you to remember that I do _not_ have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
+Let's say I've set this project up a couple of days ago, but haven't done anything regarding a virtual environment yet. I see the run_tests.py file and want to run it -- i often start work on a project that way. To paraphrase a line from "A Muppet Christmas Carol": _"Now, once again, I must ask you to remember that I do _not_ _have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
 
 I try to run the tests...
 
@@ -97,11 +97,11 @@ I try to run the tests...
 
 The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-environment stuff is auto-magically taken care of.
 
-Here's what happening, under-the-hood:
-- `uv` either updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
-- it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary.
-- next, `uv` sets up a `.venv` environment based on `uv.lock's` python.
-- it then syncs that `.venv` environment with all the dependencies listed in the `uv.lock` file.
+Here's what `uv` is doing, under-the-hood:
+- it either updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like the file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
+- it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary. All these versioned-downloads are stored, and will _not_ need to be downloaded again, even for other projects.
+- it sets up a `.venv` environment with a valid version of python.
+- it then syncs to that `.venv` environment all the dependencies listed in the `uv.lock` file.
 - it does all of that in the blink of an eye.
 - and then `uv` runs that run_tests.py file -- in the context of the `.venv`'s virtual-environment.
 
@@ -164,10 +164,10 @@ Your workshop attendees have just been able to run a python script without _expl
 
 The magic is in the inline-script-metadata at the top. Like the pyproject.toml file mentioned previously -- this is not a `uv` specific feature, but an official python-specification (PEP 723). 
 
-Under-the-hood, uv is doing something very similar to what was shown before:
+Under-the-hood, `uv` is doing something very similar to what was shown before:
 - it downloads the version of python if it's not already available
 - it figures out the dependencies and sub-dependencies needed
-- it downloads dependencies that aren't already available 
+- it downloads dependencies that aren't already available (again versioned-dependencies are stored for reuse, even by other scripts)
 - it sets up a virtual-environment with a valid version of python and those dependencies
 - it does all this invisibly to the user -- with caching, so subsequent venv preparation is blazingly fast
 - finally, it runs the api-script in the context of that virtual-environment
@@ -176,14 +176,14 @@ SKIP-FOR-TIME? **(need-envar-secrets? slide)**
 
 One aside: What if your script needs a secret-api-key? We developers would likely use a `.env` file and load the python-package `python-dotenv`. But you can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY = "whatever"`
 
-...and then run the script like before, passing in a path-argument.
+...and then run the script like before, with the `--env-file` path.
 
 ...and `uv` will make envars available from that file.
 
 ---
 _(3:30/10:30)_
 
-If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-environmnet, what to use when? 
+If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-environment, which to use, and when? 
 
 **(I.S.Metadata-vs-PP.toml?)**
 
