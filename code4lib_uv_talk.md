@@ -2,12 +2,13 @@
 
 (code4lib-2026)
 
+
 **(title-slide)**
+
+Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is about an open-source tool I've come to love, `uv`. 
 
 
 ## What is `uv`?
-
-Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is about an open-source tool I've come to love, `uv`. 
 
 **(uv slide)**
 
