@@ -152,11 +152,11 @@ Ok -- you give your users this sample API-access code.
 
 ...and it works. 
 
-You point out how the code accessed the url, then parsed the json response, and printed the result. 
+You point out how the code accessed the url, then parsed the json response, and printed the result. You've focused on API concepts and code.
 
-What you haven't done is spent time on set-up and installation.
+What you haven't done is spent _any_ time with your users on set-up and installation -- but not because this is hidden, and they'll have to figure out good-practices later -- but because this is the way `uv` works.
 
-Your workshop attendees have just been able to run a python script without _explitly_ installing python, or a virtual-environment, or dependencies. They, and you, can focus on API-accessconcepts .
+Your workshop attendees have just been able to run a python script without _explitly_ installing python, or a virtual-environment, or dependencies.
 
 **(inline-script-metadata slide)**
 
@@ -166,33 +166,35 @@ Under-the-hood, uv is doing something very similar to what was shown before:
 - it downloads the version of python if it's not already available
 - it figures the dependencies and sub-dependencies needed
 - it downloads ones that aren't already available and installs them into a virtual-environment
-- it activates the virtual-environment
-- it does all this invisibly to the user, in an ephemeral virtual-environment (with caching, so subsequent venv preparation is blazingly fast)
+- it activates and populates the virtual-environment
+- it does all this invisibly to the user, in an invisible ephemeral virtual-environment -- with caching, so subsequent venv preparation is blazingly fast
 - finally,it runs the api-script in the context of that virtual-environment
 
-SKIPPED: **(need-envar-secrets? slide)**
+SKIP-FOR-TIME? **(need-envar-secrets? slide)**
 
-One minoraddition: What if your script needs a secret-api-key? We developers would likely use a `.env` file and load the python-package `python-dotenv`. But you can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY = "whatever"`
+One aside: What if your script needs a secret-api-key? We developers would likely use a `.env` file and load the python-package `python-dotenv`. But you can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY = "whatever"`
 
-...and then run `uv run --env-file "/path/to/scret_stuff.txt" ./api_example_01.py`
+...and then run the script like before, passing in a path-argument.
 
 ...and `uv` will make envars available from that file.
 
 ---
 _(3:30/10:30)_
 
+If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-envionmnet, what to use when? 
+
+**(I.S.Metadata-vs-PP.toml?)**
+
+A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` for single-file scripts. There are grey areas; pyproject.toml offers many more features -- but that's a workable rule.
+
 
 ## Inline-script-metadata -- gists.
 
-The folk making `uv` didn't stop there, they enabled such scripts to be run _remotely_.
+Ok -- as we've seen, inline-script-metadata is the key info for how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
 
 **(InlScrMetadata-gists slide)**
 
-...like this:
-
-`uv run "https://gist.github.com/birkin/8c10e338f266555e53ac2f3a496e4153"`
-
-...making it easier to share code with end-users.
+First, uv can directly run code in gists, providing great opportunities to share code with end-users.
 
 ---
 _(0:30/11:00)_
@@ -204,61 +206,47 @@ But maybe you don't want to share lots of individual gist-urls (where the url do
 
 **(InlScrMetadata-github-repo slide)**
 
-You _can_ do that, but... you have to use the "raw" github-url. Here's an example from a little "[utilities][ut]" repo of mine. I'm not going to go over this in the interests of time.
+Well you _can_ do that, but it's not ideal... Here's an example from a little utilities-repo of mine -- this particular utility-script just outputs random-IDs in a way I like. I'm not going to go over this in the interests of time.
 
-```
-% uv run "https://raw.githubusercontent.com/birkin/utilities-project/refs/heads/main/random_id_maker.py"
-N2G7RCx4zV
-
-% uv run "https://raw.githubusercontent.com/birkin/utilities-project/refs/heads/main/random_id_maker.py" --length 20
-UxJmwDkHbaeRnNXTkyWH
-```
-
-[ut]: <https://github.com/birkin/utilities-project/blob/main/random_id_maker.py>
+The url does contain more meaning -- but you have to use the "raw" github-url, and can't be described as "friendly".
 
 ---
 _(0:30/11:30)_
----
 
 
 ## Inline-script-metadata -- github-pages.
 
-But the _ideal_ would be a way to bundle together a bunch of useful scripts to share, in a repo, but with a friendly interface. 
+The _ideal_ would be a way to bundle together a bunch of useful scripts to share, in a repo, but with a friendly interface. 
 
 **(InlScrMetadata-github.io-pages slide)**
 
 A combination of `uv` and github.io-pages offers just this.
 
-We have a small github-repo of tools for working with the Brown Digital Repository (BDR) public API:
-<https://github.com/Brown-University-Library/bdr-api-tools>
+We have a small github-repo of tools for end-users -- for working with the Brown Digital Repository public APIs.
+
+But we don't offer that repo-url, but instead offer a much nicer website url. This is part of a long useful landing-page.
 
 **(example-website slide)**
 
-But we offer to end-users not the repo-url, but a much nicer website url:
-<https://brown-university-library.github.io/bdr-api-tools/>
+This much friendlier website is auto-created from the repo via just three _one-time_ steps:
 
-The much friendlier website is auto-created from the repo via just three steps:
+**(three-steps slide)**
 
-**(repo-url --> github.io-pages slide)**
+- you create an `index.md` file (which automatically becomes the landing-page html)  -- in our repo's "README.md" file we direct folk to this file
+- you change one repository setting 
+- you click "Save"
 
-- create an [index.md][idx] file  -- the repo's "README.md" file points to this.
-- change one repository setting 
-    - SKIP (`Settings --> Pages --> Branch` setting) (under "Branch", change "None" to "main" -- and leave the default "/(root)")
--  -- and click "Save"
+In a few minutes, reloading the page will show the url to your new website, auto-built and, ongoing -- auto-updated from the repo.
 
-In a few minutes, reloading the page will show, under the "GitHub Pages" title, the message: _"Your site is live at https://brown-university-library.github.io/bdr-api-tools/"_.
-
-You can give that link to your users, and that landing page is completely under your control, from the `index.md` file. 
+Your colleagues can give that link to the workshop-users, and that landing page is easily updatable by your team or your colleagues -- via the `index.md` file. 
 
 **(example-website-2 slide)**
 
-In that file, you can mix explanatory material with "try it" instructions...
+In that `index.md`file, you can mix explanatory material with code and "Usage" instructions...
 
 **(nice-script-urls slide)**
 
-...containing friendly-url `uv` commands like the one shown here. This tool takes a collection-pid argument and calculates the size of all the items in the collection. Yet again -- the focus is on concepts and code -- not on environment-particulars.
-
-[idx]: <https://github.com/Brown-University-Library/bdr-api-tools/blob/main/index.md>
+...containing friendly-url `uv` commands like the one shown here. This particular tool takes a collection-pid argument and calculates the size of all the items in the given collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
 
 ---
 _(2/14:00)_
