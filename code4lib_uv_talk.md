@@ -98,9 +98,10 @@ I try to run the tests...
 The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-environment stuff is auto-magically taken care of.
 
 Here's what happening, under-the-hood:
-- `uv` either updates (or creates) a `uv.lock` file, showing detailed info of _all_ dependencies (not just the ones listed in the pyproject.toml file, but their dependencies as well). (This is very much like the file `pip-compile` creates.)
-- next, `uv` sets up an invisible `.venv` directory -- and activates it.
-- it then updates that `.venv` directory with whatever version of python is specified -- and with all the dependencies listed in the `uv.lock` file.
+- `uv` either updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
+- it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary.
+- next, `uv` sets up a `.venv` environment based on `uv.lock's` python.
+- it then syncs that `.venv` environment with all the dependencies listed in the `uv.lock` file.
 - it does all of that in the blink of an eye.
 - and then `uv` runs that run_tests.py file -- in the context of the `.venv`'s virtual-environment.
 
@@ -165,10 +166,10 @@ The magic is in the inline-script-metadata at the top. Like the pyproject.toml f
 
 Under-the-hood, uv is doing something very similar to what was shown before:
 - it downloads the version of python if it's not already available
-- it figures the dependencies and sub-dependencies needed
-- it downloads ones that aren't already available and installs them into a virtual-environment
-- it activates and populates the virtual-environment
-- it does all this invisibly to the user, in an invisible ephemeral virtual-environment -- with caching, so subsequent venv preparation is blazingly fast
+- it figures out the dependencies and sub-dependencies needed
+- it downloads dependencies that aren't already available 
+- it sets up a virtual-environment with a valid version of python and those dependencies
+- it does all this invisibly to the user -- with caching, so subsequent venv preparation is blazingly fast
 - finally, it runs the api-script in the context of that virtual-environment
 
 SKIP-FOR-TIME? **(need-envar-secrets? slide)**
