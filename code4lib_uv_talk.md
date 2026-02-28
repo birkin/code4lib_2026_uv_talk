@@ -131,7 +131,7 @@ What I've shared so far has been about how `uv` can be really useful for _develo
 
 **(scenarios slide)**
 
-This second-half of the talk is about features `uv` offers that simplify working with code for _end-users_, and our colleagues that work with end-users.
+This second-half of the talk is about features `uv` offers that simplify working with code for _end-users_, and for our colleagues that work with end-users. (Credit -- I got some of these ideas from Simon Willison's excelent website.)
 
 The problem being addressed:
 
@@ -266,7 +266,9 @@ To sum up, I love `uv` for two main reasons:
 
 - It can simplify the process of sharing code with end-users -- we can work with colleagues who do trainings to come up with scripts that end-users can bookmark and experiment with -- while minimizing discouraging setup-friction.
 
-There's a lot more that `uv` does, but these are the highlights for me. I hope you enjoy using it for your own dev-projects -- and sharing with colleagues its end-user features. Please feel free to ping me with questions. Thanks.
+There's a lot more that `uv` does, but these are the highlights for me. I hope you enjoy using it for your own dev-projects -- and I hope you enjoy sharing it with colleagues who do workshops for its end-user features. 
+
+Please feel free to ping me with questions. Thanks.
 
 ---
 _(1/15:00)_
