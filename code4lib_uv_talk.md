@@ -224,9 +224,11 @@ A combination of `uv` and github.io-pages offers just this.
 
 We have a small github-repo of tools for end-users -- for working with the Brown Digital Repository public APIs.
 
-But we don't offer that repo-url, but instead offer a much nicer website url. This is part of a long useful landing-page.
+But we don't offer that repo-url, but instead offer a much nicer website url. 
 
 **(example-website slide)**
+
+This is part of a long useful landing-page.
 
 This much friendlier website is auto-created from the repo via just three _one-time_ steps:
 
