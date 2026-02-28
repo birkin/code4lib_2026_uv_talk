@@ -135,7 +135,7 @@ This second-half of the talk is about features `uv` offers that simplify working
 
 The problem being addressed:
 
-Many of us have had the experience of wanting to run a workshop for users on something like how to access APIs, or using natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
+Many of us have had the experience of running a workshop for users on something like how to access APIs, or using natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
 
 Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are just one-liners -- but it _is_ a requirement for what follows.
 
