@@ -12,23 +12,23 @@ Hi, I'm Birkin Diana, a developer for the Brown University Library. This talk is
 
 **(uv slide)**
 
-`uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python environments. 
+`uv` does a lot of things, but I've found it most useful to think of it as a python package-manager, and, more broadly, as a tool for managing python virtual-environments. 
 
 I know this is code4lib -- but just so we're on the same page: to clarify two terms... 
 
 **(terms slide)**
 
-- **"python-package"**: i think of a python-package as a bundle of code that does some -thing-. python comes with lots of useful bundles-of-code, or packages, built-in. So if you want to have your code make web-requests, or work with xml, python contains built-in packages for each of those; you don't have to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
+- **"python-package"**: it's useful to think of a python-package as a bundle of code that does some -thing-. python comes with lots of useful bundles-of-code, or packages or modules, built-in -- for example, to make web-requests, or work with xml. So sometimes you don't need to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
 
-- **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml package, but version-XYZ. virtual-environments are a way to isolate these python/package environments so they don't interfere with one another.
+- **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml package, but version-XYZ. virtual-environments are a way to isolate these python/package environments so they don't conflict with one another.
 
 Ok -- in this talk, I'll share two main things: 
 
 **(in-this-talk slide)**
 
-- First, how our dev-team _started_ using `uv` for our development projects -- and how we now use it. 
+- First, how our dev-team _started_ using `uv` for our development projects -- and how we _now_ use it. 
 
-- Second, how how a feature of `uv` offers a way developers can work with colleagues to come up with really useful tools for end-users who _are_ interested in working with code-based tools -- but are _not_ that interested in nuances of installations and virtual-environments and package-management.
+- Second, how `uv` offers ways we, or colleagues, can share code with end-users who _are_ interested in working with code-based tools -- but are _not_ that interested in nuances of installations and virtual-environments and package-management.
 
 ---
 
@@ -58,6 +58,7 @@ And if you have a "requirements.txt" file, listing the packages your project nee
 ...that will populate your activated virtual-environment in nearly exactly the same way.
 
 Because we were so comfortable with pip, that's how we started using `uv`. Yes, `uv` is faster, and yes, some of the ways `uv` does things under-the-hood are more elegant -- but it wasn't a tremendous savings.
+
 If you're cautious and conservative, this will make you feel more comfortable about using `uv`. But my recommendation: don't do this.
 
 ---
@@ -88,7 +89,7 @@ Ok -- let's say I `cd` into this project.
 
 **(run_tests slide)**
 
-Let's say I've set this project up a couple of days ago, but haven't done anything regarding a virtual environment yet. I see the run_tests.py file and want to run it -- i often start work on a project that way. To paraphrase a line from "A Muppet Christmas Carol": _"Now, once again, I must ask you to remember that I do _not_ _have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
+Let's say I set-up this project a couple of days ago --but haven't yet done anything regarding a virtual environment. I see the run_tests.py file and want to run it -- i often start work on a project that way. To paraphrase a line from "A Muppet Christmas Carol": _"I must ask you to remember that I do **not** have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
 
 I try to run the tests...
 
@@ -96,17 +97,17 @@ I try to run the tests...
 
 ...and they run! And remember all those dependencies!
 
-The kind-of-awesome significance of that: you think about your code, and what you want to do, and the virtual-environment stuff is auto-magically taken care of.
+The kind-of-awesome significance of this: you think about your code, and what you want to do, and the virtual-environment stuff is automatically taken care of.
 
 Here's what `uv` is doing, under-the-hood:
-- it either updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like the file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
+- it updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like the file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
 - it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary. All these versioned-downloads are stored, and will _not_ need to be downloaded again, even for other projects.
-- it sets up a `.venv` environment with a valid version of python.
-- it then syncs to that `.venv` environment all the dependencies listed in the `uv.lock` file.
+- it sets up a `venv` environment with a valid version of python.
+- it then syncs to that `venv` environment all the dependencies listed in the `uv.lock` file.
 - it does all of that in the blink of an eye.
-- and then `uv` runs that run_tests.py file -- in the context of the `.venv`'s virtual-environment.
+- and then `uv` runs that run_tests.py file -- in the context of the `venv`'s virtual-environment.
 
-Here's our code-deployment script...
+Here's part ofour code-deployment script...
 
 **(deploy-script slide)**
 
@@ -114,7 +115,7 @@ the highlights...
 
 - we cd to the project-directory
 
-- we run a `uv` sync command -- this one line fully updates the virtual-environment from the pyproject.toml file -- via an updated uv.lock file -- _superfast_
+- we run a `uv` sync command -- This one line fully updates the virtual-environment from the pyproject.toml file -- via an updated uv.lock file -- _superfast_
 
 **(a venv-deploy-becomes slide)**
 
@@ -138,18 +139,18 @@ The problem being addressed:
 
 Many of us have had the experience of running a workshop for users on something like how to access APIs, or using natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
 
-Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are just one-liners -- but it _is_ a requirement for what follows.
+Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are just one-liners -- but it _is_ a requirement.
 
 
 ## Inline-script-metadata -- intro.
 
 **(api-workshop slide)**
 
-Imagine you're doing a workshop for folk wanting to learn about APIs, and how to access them. You want to show them useful code to access the API, and you want them to be able to run this on their own computers so that they can more easily experiment during and after the workshop.
+Imagine you're running a workshop for folk wanting to learn about APIs, and how to access them. You want to show them useful code to access the API, and you want them to be able to run this on their own computers so that they can more easily experiment during and after the workshop.
 
-Ok -- you give your users this sample API-access code.
+Ok -- you give your users this sample code to access an API.
 
-...and then, you ask them to `cd` to the directory where that file is, and then run it...
+Then you ask them to `cd` to the directory where that file is, and then run it...
 
 **(output slide)**
 
@@ -157,9 +158,7 @@ Ok -- you give your users this sample API-access code.
 
 You point out how the code accessed the url, then parsed the json response, and printed the result. You've focused on API concepts and code.
 
-What you haven't done is spent _any_ time with your users on set-up and installation -- but not because this is hidden, and they'll have to figure out good-practices later -- but because this is the way `uv` works.
-
-Your workshop attendees have just been able to run a python script without _explicitly_ installing python, or a virtual-environment, or dependencies.
+What you haven't done is spent _any_ time with your users on set-up and installation. No time on installing python, or a virtual-environment, or dependencies. Not because this is hidden, and they'll have to figure it out later -- but because this is the way `uv` works.
 
 **(inline-script-metadata slide)**
 
@@ -193,7 +192,7 @@ A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` 
 
 ## Inline-script-metadata -- gists.
 
-Ok -- as we've seen, inline-script-metadata is the key info for how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
+Ok -- as we've seen, inline-script-metadata is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
 
 **(InlScrMetadata-gists slide)**
 
@@ -205,11 +204,11 @@ _(0:30/11:00)_
 
 ## Inline-script-metadata -- github repo.
 
-But maybe you don't want to share lots of individual gist-urls (where the url doesn't convey meaning) with your workshop users. Wouldn't it be nice to group useful files together in a github repo, and share repo-script links?
+But maybe you don't want to share, with your workshop users, lots of individual gist-urls (where the url doesn't convey meaning). Wouldn't it be nice to group useful scripts together in a github repo, and share links to those scripts?
 
 **(InlScrMetadata-github-repo slide)**
 
-Well you _can_ do that, but it's not ideal... Here's an example from a little utilities-repo of mine -- this particular utility-script just outputs random-IDs in a way I like. I'm not going to go over this in the interests of time.
+Well you _can_ do that, but it's not ideal... Here's an example from a little utilities-repo of mine -- this particular utility-script just outputs random-characters in a way I like. 
 
 The url does contain more meaning -- but you have to use the "raw" github-url, and can't be described as "friendly".
 
@@ -219,39 +218,39 @@ _(0:30/11:30)_
 
 ## Inline-script-metadata -- github-pages.
 
-The _ideal_ would be a way to bundle together a bunch of useful scripts to share, in a repo, but with a friendly interface. 
+The _ideal_ would be a way to bundle together a bunch of useful scripts in a repo, but with a friendly interface, and friendly urls. 
 
-**(InlScrMetadata-github.io-pages slide)**
+**(InlScrMetadata-github-pages slide)**
 
-A combination of `uv` and github.io-pages offers just this.
+A combination of `uv` and github-pages offers just this.
 
 We have a small github-repo of tools for end-users -- for working with the Brown Digital Repository public APIs.
 
-But we don't offer that repo-url, but instead offer a much nicer website url. 
+But we don't advertise that repo-url, but instead refer folk to a nicer website-url. 
 
 **(example-website slide)**
 
-This is part of a long useful landing-page.
-
-This much friendlier website is auto-created from the repo via just three _one-time_ steps:
+This is part of that much friendlier website, which is auto-created from the repo via just three _one-time_ steps:
 
 **(three-steps slide)**
 
-- you create an `index.md` file (which automatically becomes the landing-page html)  -- in our repo's "README.md" file we direct folk to this file
+- you create an `index.md` markdown file (which automatically becomes the landing-page html)
 - you change one repository setting 
 - you click "Save"
 
-In a few minutes, reloading the page will show the url to your new website, auto-built and, ongoing -- auto-updated from the repo.
+In a few minutes, reloading the page will show the url to your new website, auto-built and auto-updated right from the repo.
 
 Your colleagues can give that link to the workshop-users, and that landing page is easily updatable by your team or your colleagues -- via the `index.md` file. 
 
 **(example-website-2 slide)**
 
-In that `index.md`file, you can mix explanatory material with code and "Usage" instructions...
+In that `index.md` file, you can mix explanatory material with code and "Usage" instructions.
 
 **(nice-script-urls slide)**
 
-...containing friendly-url `uv` commands like the one shown here. This particular tool takes a collection-pid argument and calculates the size of all the items in the given collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
+And those usage-instructions can contain friendly-url `uv` commands like the one shown here: `bdr-api-tools/calc_collection_size.py`
+
+This script takes a collection-pid argument and calculates the size of all the items in the given collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
 
 ---
 _(2/14:00)_
@@ -265,7 +264,7 @@ To sum up, I love `uv` for two main reasons:
 
 - For our team's development work, it makes deploys affecting the virtual-environment no different than code-deploys, which greatly simplifies experimentation and package-upgrades.
 
-- It can simplify the process of sharing code with end-users -- we can work with colleagues who do trainings to come up with scripts that end-users can bookmark and experiment with -- while minimizing discouraging setup-friction.
+- It can simplify the process of sharing code with end-users -- we can work with colleagues who do trainings to come up with scripts that end-users can bookmark and experiment with -- without discouraging setup-friction.
 
 There's a lot more that `uv` does, but these are the highlights for me. I hope you enjoy using it for your own dev-projects -- and I hope you enjoy sharing it with colleagues who do workshops for its end-user features. 
 
