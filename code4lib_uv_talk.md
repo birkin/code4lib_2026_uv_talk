@@ -174,11 +174,11 @@ Under-the-hood, `uv` is doing something very similar to what was shown before:
 
 **(need-envar-secrets? slide)**
 
-One aside: What if your script needs a secret-api-key? You _could_, of course, pass that to the script as an option. But `uv` offers a special option perfect for this. You can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY = "whatever"`
+One aside: What if your script needs a secret-api-key? You _could_, of course, pass that to the script as an option. But `uv` offers a special option perfect for this. You can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY="whatever"`
 
 ...and then run the script like before, with that `uv`--env-file` path.
 
-...and `uv` will make envars available from that file.
+...and `uv` will make envars available from that file -- scoped just for this environment.
 
 ---
 _(3:30/10:30)_
