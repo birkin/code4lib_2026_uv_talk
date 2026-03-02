@@ -28,7 +28,7 @@ Ok -- in this talk, I'll share two main things:
 
 - First, how our dev-team _started_ using `uv` for our development projects -- and how we _now_ use it. 
 
-- Second, how `uv` offers ways we, or colleagues, can share code with end-users who _are_ interested in working with code-based tools -- but are _not_ that interested in nuances of installations and virtual-environments and package-management.
+- Second, how `uv` offers ways we, or colleagues, can share code with end-users who _ARE_ interested in working with code-based tools -- but are _not_ that interested in nuances of installations and virtual-environments and package-management.
 
 ---
 
@@ -250,7 +250,7 @@ In that `index.md` file, you can mix explanatory material with code and "Usage" 
 
 And those usage-instructions can contain friendly-url `uv` commands like the one shown here: `bdr-api-tools/calc_collection_size.py`
 
-This script takes a collection-pid argument and calculates the size of all the items in the given collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
+This script takes a collection-pid argument and calculates the size of all the items in the given Brown-Digital-Repository collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
 
 ---
 _(2/14:00)_
@@ -262,9 +262,9 @@ _(2/14:00)_
 
 To sum up, I love `uv` for two main reasons:
 
-- For our team's development work, it makes deploys affecting the virtual-environment no different than code-deploys, which greatly simplifies experimentation and package-upgrades.
+- For devs, it makes deploys affecting the virtual-environment no different than code-deploys, which greatly simplifies experimentation and package-upgrades and rollbacks.
 
-- It can simplify the process of sharing code with end-users -- we can work with colleagues who do trainings to come up with scripts that end-users can bookmark and experiment with -- without discouraging setup-friction.
+- Second, it can _really_ simplify the process of sharing code with end-users -- we can work with colleagues who do trainings to come up with scripts that end-users can bookmark and experiment with -- without discouraging setup-friction.
 
 There's a lot more that `uv` does, but these are the highlights for me. I hope you enjoy using it for your own dev-projects -- and I hope you enjoy sharing it with colleagues who do workshops for its end-user features. 
 
