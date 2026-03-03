@@ -192,7 +192,7 @@ A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` 
 
 ## Inline-script-metadata -- gists.
 
-Ok -- as we've seen, `inline-script-metadata` is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also offers a feature that can be super-useful for sharing scripts that end-users can run easily, from their own computers. The feature: `uv` can run, on your computer, remote code. I'll show a few examples.
+Ok -- as we've seen, `inline-script-metadata` is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also offers a feature that can be super-useful for sharing scripts that end-users can run easily, from their own computers. The feature: `uv` can run, on your computer, remote code. (Obviously this requires re-stressing the broader point to be _very_ careful about running untrusted code.) I'll show a few examples.
 
 **(InlScrMetadata-gists slide)**
 
