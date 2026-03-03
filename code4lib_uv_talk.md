@@ -35,7 +35,7 @@ Ok -- in this talk, I'll share two main things:
 _(2/2:00 (done-by))_
 
 
-**(FIRST slide)**
+**("FIRST" slide)**
 
 ## How we started using `uv`
 
@@ -59,7 +59,7 @@ And if you have a "requirements.txt" file, listing the packages your project nee
 
 Because we were so comfortable with pip, that's how we started using `uv`. Yes, `uv` is faster, and yes, some of the ways `uv` does things under-the-hood are more elegant -- but it wasn't a tremendous savings.
 
-If you're cautious and conservative, this will make you feel more comfortable about using `uv`. But my recommendation: don't do this -- because the alternative is _so_ fantastic.
+If you're cautious and conservative, this will help you feel more comfortable about using `uv`. But my recommendation: don't do this -- because the alternative is _so_ fantastic.
 
 ---
 _(1:30/3:30)_
@@ -73,7 +73,7 @@ The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `
 
 **(pyproject.toml example)**
 
-Here's one of our typical `pyproject.toml` files.
+Here's part of one of our typical `pyproject.toml` files.
 
 For time, I'm only pointing out two things in this file:
 
@@ -83,13 +83,13 @@ For time, I'm only pointing out two things in this file:
 
 (2) _dependencies_
 
-If you use a standard pip requirements-file, the `dependencies` section will look very familiar: (Like with a requirements file, you don't have to use version-numbers, and if you do, there are different options.)
+If you use a standard pip requirements-file, the `dependencies` section will look very familiar: (Like with a requirements file, you don't have to use version-numbers, and if you do, there are different syntax-options.)
 
 Ok -- let's say I `cd` into this project. 
 
 **(run_tests slide)**
 
-Let's say I set-up this project a couple of days ago --but haven't yet done anything regarding a virtual environment. I see the run_tests.py file and want to run it -- i often start work on a project this way. To paraphrase a line from "A Muppet Christmas Carol": _"I must ask you to remember that I do **not** have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
+Let's say I set-up this project a couple of days ago --but haven't done anything regarding a virtual environment. I see the run_tests.py file and want to run it -- i often start work on a project this way. To paraphrase a line from "A Muppet Christmas Carol": _"I must ask you to remember that I do **not** have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
 
 I try to run the tests...
 
@@ -101,7 +101,7 @@ The kind-of-awesome significance of this: you think about your code, and what yo
 
 Here's what `uv` is doing, under-the-hood:
 - it updates (or creates) a `uv.lock` file, with the `pyproject.toml` dependencies and sub-dependencies. (This is like the file `pip-compile` creates, but better -- it specifies a python version or version-range, and is more universal across architectures.)
-- it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary. All these versioned-downloads are stored, and will _not_ need to be downloaded again, even for other projects.
+- it then downloads a valid version of python if necessary -- and downloads any dependencies if necessary. All these versioned-downloads are stored, and will _not_ need to be downloaded again.
 - it sets up a `venv` environment with a valid version of python.
 - it then syncs to that `venv` environment all the dependencies listed in the `uv.lock` file.
 - it does all of that in the blink of an eye.
@@ -119,7 +119,7 @@ the highlights...
 
 **(a venv-deploy-becomes slide)**
 
-What this means is that if you're deploying a branch -- using this approach -- to experiment with a new version of python, or a new version of django, or a new version of some other package -- or going back to the main branch afterwards -- you don't have to think -- at all -- about managing the virtual-environment. Your deploy is exactly the same as a code-only deploy; your code-changes to the `pyproject.toml` file auto-flow into an updated, active virtual-environment seamlessly, and very, very quickly.
+What this means is that if you're deploying a branch -- using this approach -- to experiment with a new version of python, or a new version of django, or a new version of some other package -- or going back to the main branch afterwards -- you don't have to think -- at all -- about managing the virtual-environment. Your deploy-process is exactly the same as a code-only deploy; your code-changes to the `pyproject.toml` file auto-flow into an updated, active virtual-environment seamlessly, and very, very quickly.
 
 ---
 _(3:30/7:00)_
@@ -158,16 +158,16 @@ Then you ask them to `cd` to the directory where that file is, and then run it..
 
 You point out how the code accessed the url, then parsed the json response, and printed the result. You've focused on API concepts and code.
 
-What you haven't done is spent _any_ time with your users on set-up and installation. No time on installing python, or a virtual-environment, or dependencies. Not because this is hidden, and they'll have to figure it out later -- but because this is the way `uv` works.
+What you haven't done is spent _any_ time with your users on set-up and installation. No time on installing python, or a virtual-environment, or dependencies. Not because this is hidden in a way that they'll have to figure out later -- but because this is the way `uv` works.
 
 **(inline-script-metadata slide)**
 
-The magic is in the inline-script-metadata at the top. Like the `pyproject.toml` file mentioned previously -- this is not a `uv` specific feature, but an official python-specification (PEP 723). 
+The magic is in that `inline-script-metadata` at the top. Like the `pyproject.toml` file mentioned previously -- this is not a `uv`-specific feature, but an official python-specification (PEP 723). 
 
 Under-the-hood, `uv` is doing something very similar to what was shown before:
 - it downloads the version of python if it's not already available
 - it figures out the dependencies and sub-dependencies needed
-- it downloads dependencies that aren't already available (again versioned-dependencies are stored for reuse, even by other scripts)
+- it downloads dependencies that aren't already available (again versioned-dependencies are stored for reuse)
 - it sets up a virtual-environment with a valid version of python and those dependencies
 - it does all this invisibly to the user -- with caching, so subsequent venv preparation is blazingly fast
 - finally, it runs the api-script in the context of that virtual-environment
@@ -192,7 +192,7 @@ A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` 
 
 ## Inline-script-metadata -- gists.
 
-Ok -- as we've seen, `inline-script-metadata` is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
+Ok -- as we've seen, `inline-script-metadata` is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also offers a feature that can be super-useful for sharing scripts that end-users can run easily, from their own computers. The feature: `uv` can run, on your computer, remote code. I'll show a few examples.
 
 **(InlScrMetadata-gists slide)**
 
@@ -245,7 +245,7 @@ Your colleagues can give _that_ link to the workshop-users, and that landing pag
 
 **(example-website-2 slide)**
 
-In that `index.md` markdownfile, you can mix explanatory material with code and "Usage" instructions.
+In that `index.md` markdown-file, you can mix explanatory material with code and "Usage" instructions.
 
 **(nice-script-urls slide)**
 
