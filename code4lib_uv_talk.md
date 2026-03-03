@@ -18,7 +18,7 @@ I know this is code4lib -- but just so we're on the same page: to clarify two te
 
 **(terms slide)**
 
-- **"python-package"**: it's useful to think of a python-package as a bundle of code that does some -thing-. python comes with lots of useful bundles-of-code, or packages or modules, built-in -- for example, to make web-requests, or work with xml. So sometimes you don't need to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
+- **"python-package"**: You can think of a python-package as a bundle of code that does some -thing-, like make web-requests, or work with xml. python comes with lots of useful bundles-of-code, or packages or modules, built-in. So sometimes you don't need to install anything beyond python. But there are _lots_ of _really_ useful third-party python-packages that can be installed.
 
 - **"virtual-environment"**: project-A, from two years ago, might have been built with python-3.8, using a third-party xml package version-ABC. And project-B, that you're working on now, may be using python-3.12, using the same third-party xml package, but version-XYZ. virtual-environments are a way to isolate these python/package environments so they don't conflict with one another.
 
