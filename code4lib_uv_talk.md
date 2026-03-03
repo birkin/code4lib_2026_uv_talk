@@ -115,7 +115,7 @@ the highlights...
 
 - we cd to the project-directory
 
-- we run a `uv` sync command -- This one line fully updates the virtual-environment from the pyproject.toml file -- via an updated uv.lock file -- _superfast_
+- we run a `uv` sync command -- This one line fully updates the virtual-environment from the uv.lock file -- _superfast_
 
 **(a venv-deploy-becomes slide)**
 
