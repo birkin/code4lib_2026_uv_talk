@@ -107,7 +107,7 @@ Here's what `uv` is doing, under-the-hood:
 - it does all of that in the blink of an eye.
 - and then `uv` runs that run_tests.py file -- in the context of the `venv`'s virtual-environment.
 
-Here's part ofour code-deployment script...
+Here's part of our code-deployment script...
 
 **(deploy-script slide)**
 
@@ -133,7 +133,7 @@ What I've shared so far has been about how `uv` can be really useful for _develo
 
 **(scenarios slide)**
 
-This second-half of the talk is about features `uv` offers that simplify working with code for _end-users_, and for our colleagues that work with end-users. (Credit -- I got some of these ideas from Simon Willison's excelent website.)
+This second-half of the talk is about features `uv` offers that simplify working with code for _end-users_, and for our colleagues that work with end-users. (Credit -- I got some of these ideas from Simon Willison's excellent website.)
 
 The problem being addressed:
 
@@ -176,7 +176,7 @@ Under-the-hood, `uv` is doing something very similar to what was shown before:
 
 One aside: What if your script needs a secret-api-key? You _could_, of course, pass that to the script as an option. But `uv` offers a special option perfect for this. You can tell your workshop-attendees to create a file named "secret_stuff.txt", put in `API_KEY="whatever"`
 
-...and then run the script like before, with that `uv`--env-file` path.
+...and then run the script like before, with that `uv --env-file` path.
 
 ...and `uv` will make envars available from that file -- scoped just for this environment.
 
