@@ -55,11 +55,11 @@ And if you have a "requirements.txt" file, listing the packages your project nee
 
 `pip install -r /path/to/requirements.txt`
 
-...that will populate your activated virtual-environment in nearly exactly the same way.
+...that will populate your activated virtual-environment in nearly the same way.
 
 Because we were so comfortable with pip, that's how we started using `uv`. Yes, `uv` is faster, and yes, some of the ways `uv` does things under-the-hood are more elegant -- but it wasn't a tremendous savings.
 
-If you're cautious and conservative, this will make you feel more comfortable about using `uv`. But my recommendation: don't do this.
+If you're cautious and conservative, this will make you feel more comfortable about using `uv`. But my recommendation: don't do this -- because the alternative is _so_ fantastic.
 
 ---
 _(1:30/3:30)_
@@ -73,9 +73,9 @@ The way we now use `uv` centers on a file named `pyproject.toml`. This isn't a `
 
 **(pyproject.toml example)**
 
-Here's one of our typical pyproject.toml files.
+Here's one of our typical `pyproject.toml` files.
 
-In the interests of time, I'm only going to point out two things in this file:
+For time, I'm only pointing out two things in this file:
 
 (1) _requires-python_
 
@@ -89,7 +89,7 @@ Ok -- let's say I `cd` into this project.
 
 **(run_tests slide)**
 
-Let's say I set-up this project a couple of days ago --but haven't yet done anything regarding a virtual environment. I see the run_tests.py file and want to run it -- i often start work on a project that way. To paraphrase a line from "A Muppet Christmas Carol": _"I must ask you to remember that I do **not** have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
+Let's say I set-up this project a couple of days ago --but haven't yet done anything regarding a virtual environment. I see the run_tests.py file and want to run it -- i often start work on a project this way. To paraphrase a line from "A Muppet Christmas Carol": _"I must ask you to remember that I do **not** have a virtual-environment. That one thing you must remember, or nothing that follows will seem wondrous."_
 
 I try to run the tests...
 
@@ -119,7 +119,7 @@ the highlights...
 
 **(a venv-deploy-becomes slide)**
 
-What this means is that if you're deploying a branch -- using this approach -- to experiment with a new version of python, or a new version of django, or a new version of some other package -- or going back to the main branch afterwards -- you don't have to think -- at all -- about managing the virtual-environment. Your deploy is exactly the same as a code-only deploy; your code-changes to the pyproject.toml file auto-flow into an updated, active virtual-environment seamlessly, and very, very quickly.
+What this means is that if you're deploying a branch -- using this approach -- to experiment with a new version of python, or a new version of django, or a new version of some other package -- or going back to the main branch afterwards -- you don't have to think -- at all -- about managing the virtual-environment. Your deploy is exactly the same as a code-only deploy; your code-changes to the `pyproject.toml` file auto-flow into an updated, active virtual-environment seamlessly, and very, very quickly.
 
 ---
 _(3:30/7:00)_
@@ -129,7 +129,7 @@ _(3:30/7:00)_
 
 ## pivot -- helping others
 
-What I've shared so far has been about how `uv` can be really useful for _development_. 
+What I've shared so far has been about how `uv` can be _really_ useful for _development_. 
 
 **(scenarios slide)**
 
@@ -137,9 +137,9 @@ This second-half of the talk is about features `uv` offers that simplify working
 
 The problem being addressed:
 
-Many of us have had the experience of running a workshop for users on something like how to access APIs, or using natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be very useful for this, too.
+Many of us have had the experience of running a workshop for users on something like how to access APIs, or use natural-language-processing tools -- only to get bogged down in the set-up-process -- helping users install a certain version of python, and then necessary dependencies in a virtual-environment. That can be dispiriting for end-users. Sometimes a jupyter-notebook or a google-colab setup can minimize this. But `uv` can also be _very_ useful for this, too.
 
-Everything that follows _does_ assume end-users have installed `uv`. Most installation-instructions are just one-liners -- but it _is_ a requirement.
+Everything that follows _does_ require end-users to install `uv`. Most installation-instructions are just one-liners -- but it is a requirement.
 
 
 ## Inline-script-metadata -- intro.
@@ -162,7 +162,7 @@ What you haven't done is spent _any_ time with your users on set-up and installa
 
 **(inline-script-metadata slide)**
 
-The magic is in the inline-script-metadata at the top. Like the pyproject.toml file mentioned previously -- this is not a `uv` specific feature, but an official python-specification (PEP 723). 
+The magic is in the inline-script-metadata at the top. Like the `pyproject.toml` file mentioned previously -- this is not a `uv` specific feature, but an official python-specification (PEP 723). 
 
 Under-the-hood, `uv` is doing something very similar to what was shown before:
 - it downloads the version of python if it's not already available
@@ -187,12 +187,12 @@ If both `pyproject.toml` and `inline-script-metadata` can manage the virtual-env
 
 **(I.S.Metadata-vs-PP.toml?)**
 
-A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` for single-file scripts. There are grey areas; pyproject.toml offers many more features -- but that's a workable rule.
+A brief answer: use `pyproject.toml` for projects, and `inline-script-metadata` for single-file scripts. There are grey areas; `pyproject.toml` offers many more features -- but that's a workable rule.
 
 
 ## Inline-script-metadata -- gists.
 
-Ok -- as we've seen, inline-script-metadata is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
+Ok -- as we've seen, `inline-script-metadata` is the key to how useful `uv` can be for end-users. But for colleagues working with end-users, `uv` also allows remote-execution of code that can be super-useful for sharing scripts that end-users can run easily, from their own computers. I'll show a few examples.
 
 **(InlScrMetadata-gists slide)**
 
@@ -224,33 +224,34 @@ The _ideal_ would be a way to bundle together a bunch of useful scripts in a rep
 
 A combination of `uv` and github-pages offers just this.
 
-We have a small github-repo of tools for end-users -- for working with the Brown Digital Repository public APIs.
+We have a small github-repo of tools for end-users -- for working with the Brown-Digital-Repository public APIs.
 
 But we don't advertise that repo-url, but instead refer folk to a nicer website-url. 
 
 **(example-website slide)**
 
-This is part of that much friendlier website, which is auto-created from the repo via just three _one-time_ steps:
+This is part of that much friendlier website, which -- is _auto-created_ from the repo via just three _one-time_ steps:
 
 **(three-steps slide)**
 
+this is github-pages stuff:
 - you create an `index.md` markdown file (which automatically becomes the landing-page html)
 - you change one repository setting 
 - you click "Save"
 
 In a few minutes, reloading the page will show the url to your new website, auto-built and auto-updated right from the repo.
 
-Your colleagues can give that link to the workshop-users, and that landing page is easily updatable by your team or your colleagues -- via the `index.md` file. 
+Your colleagues can give _that_ link to the workshop-users, and that landing page is easily updatable by your team or your colleagues -- via the `index.md` file. 
 
 **(example-website-2 slide)**
 
-In that `index.md` file, you can mix explanatory material with code and "Usage" instructions.
+In that `index.md` markdownfile, you can mix explanatory material with code and "Usage" instructions.
 
 **(nice-script-urls slide)**
 
 And those usage-instructions can contain friendly-url `uv` commands like the one shown here: `bdr-api-tools/calc_collection_size.py`
 
-This script takes a collection-pid argument and calculates the size of all the items in the given Brown-Digital-Repository collection. Yet again -- the focus is on concepts and code and usability -- not on environment-particulars.
+This script takes a collection-pid argument and calculates the size of all the items in the given Brown-Digital-Repository collection. Yet again -- the focus is on concepts and code and functionality -- not on environment-particulars.
 
 ---
 _(2/14:00)_
